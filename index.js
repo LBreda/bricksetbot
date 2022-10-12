@@ -20,9 +20,9 @@ let getItemSetNumber = (item) => {
   return item.numberVariant ? `${item.number}-${item.numberVariant}` : item.number
 }
 
-// Prints a decimal vote as number of stars out of ten
+// Prints a decimal vote as number of stars out of five
 let printRating = (vote) => {
-  return emoji.get(vote < 5 ? "confused" : vote < 6.5 ? "expressionless" : "grin") + " " + vote;
+  return emoji.get(vote < 2.5 ? "confused" : vote < 3.5 ? "expressionless" : "grin") + " " + vote;
 }
 
 // Parses a Brickset search item to get a markdow1n description
