@@ -29,8 +29,10 @@ let getItemAgeRange = (item) => {
     return `From ${item.ageRange.min} to ${item.ageRange.max}`
   } else if(item.ageRange.min) {
     return `${item.ageRange.min}+`
-  } else {
+  } else if(item.ageRange.max) {
     return `< ${item.ageRange.max}`
+  } else {
+    return "Not defined"
   }
 }
 
@@ -46,7 +48,7 @@ let bricksetItemToMarkdown = async (item) => {
   result += `*Theme*:  ${getItemThemeHierarchy(item)}\n`
   if(item.pieces) result += `*Pieces*: ${item.pieces}\n`
   if(item.minifigs) result += `*Minifigures*: ${item.minifigs}\n`
-  if(item.ageRange) result += `*Age range*: ${getItemAgeRange(item)}\n`
+  if(item.ageRange && (item.ageRange.min || item.ageRange.max)) result += `*Age range*: ${getItemAgeRange(item)}\n`
 
   if (item.rating != 0) {
     result += "\n*Rating*: " + printRating(item.rating) + "\n"
