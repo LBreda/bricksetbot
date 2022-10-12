@@ -16,8 +16,22 @@ let getItemThemeHierarchy = (item) => {
   return [item.themeGroup, item.theme, item.subtheme].filter(part => part).join(' / ')
 }
 
+// Gets set number
 let getItemSetNumber = (item) => {
   return item.numberVariant ? `${item.number}-${item.numberVariant}` : item.number
+}
+
+// Gets age range as a string
+let getItemAgeRange = (item) => {
+  if(!item.ageRange) return "Not defined"
+
+  if(item.ageRange.min && item.ageRange.max) {
+    return `From ${item.ageRange.min} to ${item.ageRange.max}`
+  } else if(item.ageRange.min) {
+    return `${item.ageRange.min}+`
+  } else {
+    return `< ${item.ageRange.max}`
+  }
 }
 
 // Prints a decimal vote as number of stars out of five
@@ -30,10 +44,12 @@ let bricksetItemToMarkdown = async (item) => {
   let result = getItemImageLink(item)
   result += `*${getItemSetNumber(item)} ${item.name}* (${item.year})\n\n`
   result += "*Theme*: " + getItemThemeHierarchy(item) + "\n"
-  result += "*Pieces*: " + item.pieces + "\n"
+  if(item.pieces) result += "*Pieces*: " + item.pieces + "\n"
+  if(item.minifigs) result += "*Minifigures*: " + item.minifigs + "\n"
+  if(item.ageRange) result += getItemAgeRange(item)
 
   if (item.rating != 0) {
-    result += "*Rating*: " + printRating(item.rating) + "\n"
+    result += "\n*Rating*: " + printRating(item.rating) + "\n"
   }
 
   return result
